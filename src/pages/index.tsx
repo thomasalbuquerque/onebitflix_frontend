@@ -9,6 +9,7 @@ import HeaderNoAuth from '@/components/homeNoAuth/headerNoAuth'
 import PresentationSection from '@/components/homeNoAuth/presentationSection'
 import CardsSection from '@/components/homeNoAuth/cardsSection'
 import SlideSection from '@/components/homeNoAuth/slideSection'
+import Footer from '@/components/common/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ const HomeNoAuth =  function ({ courses }: IndexPageProps) {
 				</div>
 				<CardsSection />
 		    <SlideSection newestCourses={courses}/>
+				<Footer/>
 			</main>
 		</>
 )};
