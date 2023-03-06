@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await courseService.getNewestCourses();
   return {
     props: {
-      courses: res.data,
+      courses: res,
     },
     revalidate: 3600 * 24,
   };

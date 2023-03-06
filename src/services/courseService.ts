@@ -24,7 +24,8 @@ const courseService = {
       return error.response;
     });
 
-    return res;
+    const typedRes: CourseType[] = res.data
+    return typedRes;
   },
 };
 
