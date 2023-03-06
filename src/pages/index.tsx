@@ -17,7 +17,7 @@ interface IndexPageProps {
   courses: CourseType[];
 }
 
-const HomeNotAuth =  function ({ courses }: IndexPageProps) {
+const HomeNoAuth =  function ({ courses }: IndexPageProps) {
   return (
 		<>
 			<Head>
@@ -37,7 +37,7 @@ const HomeNotAuth =  function ({ courses }: IndexPageProps) {
 		</>
 )};
 
-export default HomeNotAuth
+export default HomeNoAuth
 
 
 export const getStaticProps: GetStaticProps = async () => {
