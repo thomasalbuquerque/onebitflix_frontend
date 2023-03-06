@@ -1,3 +1,4 @@
+@import "./colors.module.scss";
 * {
   margin: 0;
   padding: 0;
@@ -23,3 +24,7 @@ main {
   background: #868686;
   border-radius: 40px;
 }
+a:link { text-decoration: none; }
+a:visited { text-decoration: $darkGray; } //não funciona pq a cor do scss mais inferior sobrescreve
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
