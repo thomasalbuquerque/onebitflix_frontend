@@ -3,8 +3,51 @@ import Head from "next/head";
 import HeaderGeneric from "@/components/common/headerGeneric";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import Footer from "@/components/common/footer";
+import { FormEvent, useState } from "react";
+import authService from "@/services/authService";
+import { useRouter } from "next/router";
+import ToastComponent from "@/components/common/toast";
 
 const Register = function () {
+  const router = useRouter();
+  const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const firstName = formData.get("firstName")!.toString();
+    const lastName = formData.get("lastName")!.toString();
+    const phone = formData.get("phone")!.toString();
+    const birth = formData.get("birth")!.toString();
+    const email = formData.get("email")!.toString();
+    const password = formData.get("password")!.toString();
+    const confirmPassword = formData.get("confirmPassword")!.toString();
+    const params = { firstName, lastName, phone, birth, email, password };
+
+    if (password != confirmPassword) {
+      setToastMessage("Senha e confirmação diferentes.");
+      setToastIsOpen(true);
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 1000 * 3);
+
+      return;
+    }
+    const { data, status } = await authService.register(params);
+
+    if (data.status === 201) {
+      router.push("/login?sucess=true");
+    } else {
+      setToastMessage(data.message);
+      setToastIsOpen(true);
+      setTimeout(() => {
+      setToastIsOpen(false);
+    }, 1000 * 3);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -20,7 +63,7 @@ const Register = function () {
         />
         <Container className="py-5">
           <p className={styles.formTitle}>Bem-vindo(a) ao OneBitFlix!</p>
-          <Form className={styles.form}>
+          <Form className={styles.form} onSubmit={handleRegister}>
             <p className="text-center">
               <strong>Bem-vindo(a) ao OneBitFlix!</strong>
             </p>
@@ -90,7 +133,7 @@ const Register = function () {
                 // min="01-01-1930"
                 // max="31-12-2020"
                 // format='DD/MM/YYYY'
-                data-mask='DD/MM/YYYY'
+                data-mask="DD/MM/YYYY"
                 placeholder="DD-MM-AAAA"
                 required
                 className={styles.input}
@@ -131,6 +174,7 @@ const Register = function () {
             </Button>
           </Form>
         </Container>
+        <ToastComponent color="bg-danger" isOpen={toastIsOpen} message={toastMessage}/>
         <Footer />
       </main>
     </>
