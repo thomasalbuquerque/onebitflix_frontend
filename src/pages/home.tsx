@@ -1,5 +1,6 @@
 import HeaderAuth from "@/components/common/headerAuth";
 import FeaturedSection from "@/components/homeAuth/featuredSection";
+import NewestCategory from "@/components/homeAuth/newestCategory";
 import Head from "next/head";
 
 const HomeAuth = function () {
@@ -11,6 +12,7 @@ const HomeAuth = function () {
       </Head>
       <main>
         <FeaturedSection/>
+        <NewestCategory />
       </main>
     </>
   );
