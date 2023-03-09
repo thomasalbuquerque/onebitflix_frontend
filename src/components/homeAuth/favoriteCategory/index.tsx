@@ -18,7 +18,7 @@ const FavoritesCourses = function () {
   return (
     <>
       <Container className="d-flex flex-column align-items-center py-5">
-        <p className={styles.titleCategory}>Minha Lista</p>
+        <p className={styles.titleCategory}>MINHA LISTA</p>
         {data.data.courses.length >= 1 ? (
           <SlideComponent courses={data.data.courses} />
         ) : (
