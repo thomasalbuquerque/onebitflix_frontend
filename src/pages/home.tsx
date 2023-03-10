@@ -12,7 +12,7 @@ const HomeAuth = function () {
     <>
 			<Head>
         <title>Onebitflix - Home</title>
-        <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       </Head>
       <main>
         <FeaturedSection/>

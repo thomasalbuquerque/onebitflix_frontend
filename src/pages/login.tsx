@@ -56,7 +56,7 @@ const Login = function () {
     <>
       <Head>
         <title>Onebitflix - Login</title>
-        <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       </Head>
       <main className={styles.main}>
         <HeaderGeneric
