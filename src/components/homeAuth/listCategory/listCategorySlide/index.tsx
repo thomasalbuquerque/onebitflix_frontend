@@ -3,6 +3,7 @@ import useSWR from "swr";
 import categoriesService from "../../../../services/categoriesService";
 import SlideComponent from "@/components/common/slideComponent";
 import { Container } from "reactstrap";
+import PageSpinner from "@/components/common/spinner";
 //import SwrSpinner from "../../../common/swrSpinner";
 
 interface props {
@@ -16,13 +17,9 @@ const ListCategoriesSlide = function ({ categoryId, categoryName }: props) {
   );
 
   if (error) return error;
-  if (!data)
-    /*return <SwrSpinner />;*/
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    );
+  if (!data){
+    return <PageSpinner/>
+  }
 
   return (
     <>

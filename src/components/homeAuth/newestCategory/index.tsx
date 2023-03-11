@@ -1,4 +1,5 @@
 import SlideComponent from "@/components/common/slideComponent";
+import PageSpinner from "@/components/common/spinner";
 import { Container } from "reactstrap";
 import useSWR from "swr";
 import courseService from "../../../services/courseService";
@@ -9,12 +10,9 @@ const NewestCategory = function () {
   const { data, error } = useSWR("/newest", courseService.getNewestCourses);
 
   if (error) return error;
-  if (!data) /*return <SwrSpinner />;*/
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    )
+  if (!data){
+    return <PageSpinner/>
+  }
   return(
     <>
       <Container fluid className="d-flex flex-column align-items-center py-5">

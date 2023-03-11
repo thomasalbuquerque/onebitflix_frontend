@@ -1,3 +1,4 @@
+import PageSpinner from "@/components/common/spinner";
 import useSWR from "swr";
 import categoriesService, {
   CategoryType,
@@ -12,13 +13,9 @@ const ListCategories = function () {
   );
 
   if (error) return error;
-  if (!data)
-    /*return <SwrSpinner />;*/
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    );
+  if (!data){
+    return <PageSpinner/>
+  }
 
   return (
     <>
