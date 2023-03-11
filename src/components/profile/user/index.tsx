@@ -79,7 +79,7 @@ const UserForm = function () {
             {lastName.slice(0, 1)}
           </p>
           <p className={styles.userName}>
-            `${firstName} ${lastName}`
+            {firstName} {lastName}
           </p>
         </div>
         <div className={styles.memberTime}>

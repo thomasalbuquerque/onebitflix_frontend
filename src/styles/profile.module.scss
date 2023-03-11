@@ -92,6 +92,8 @@
   font-size: 15px;
   padding: 6px 20px;
   transition: 0.4s;
+  display: block;
+  margin: 20px auto;
   &:hover {
     border-color: $darkRed;
     background-color: transparent;
