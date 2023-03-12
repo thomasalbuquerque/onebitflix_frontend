@@ -73,11 +73,10 @@ const courseService = {
     const token = sessionStorage.getItem("onebitflix-token");
 
     const res = await api
-      .delete("/favorites", {
+      .delete(`/favorites/${courseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        data: { courseId },
       })
       .catch((error) => {
         console.log(error.response.data.message);
@@ -108,49 +107,49 @@ const courseService = {
 
   addLike: async (courseId: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
-  
+
     const res = await api
-    .post(
-      "likes",
-      { courseId },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-    .catch((error) => {
-      console.log(error.response.data.message);
-  
-      return error.response;
-    });
-  
+      .post(
+        "likes",
+        { courseId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .catch((error) => {
+        console.log(error.response.data.message);
+
+        return error.response;
+      });
+
     return res;
   },
 
   removeLike: async (courseId: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
-  
+
     const res = await api
-    .delete("/likes", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: { courseId },
-    })
-    .catch((error) => {
-      console.log(error.response.data.message);
-  
-      return error.response;
-    });
-  
+      .delete(`/likes/${courseId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+
+        return error.response;
+      });
+
     return res;
   },
 
   getSearch: async (name: string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api.get(`/courses/search?name=${name}`, {
+    const res = await api
+      .get(`/courses/search?name=${name}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -166,19 +165,19 @@ const courseService = {
 
   getEpisodes: async (id: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
-  
+
     const res = await api
-    .get(`/courses/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    })
-    .catch((error) => {
-      console.log(error.response.data.message);
-  
-      return error.response;
-    });
-  
+      .get(`/courses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+
+        return error.response;
+      });
+
     return res;
   },
 };

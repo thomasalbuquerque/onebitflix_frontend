@@ -9,7 +9,7 @@ interface props {
 const SlideCard = function ({ course }: props) {
   return (
     <>
-      <Link href={`/courses/${course.id}`}>
+      <Link href={`/course/${course.id}`}>
         <div className={styles.slide}>
           <img
             src={`${process.env.NEXT_PUBLIC_BASEURL}/${course.thumbnailUrl}`}
@@ -20,7 +20,8 @@ const SlideCard = function ({ course }: props) {
           <p className={styles.slideDescription}>{course.synopsis}</p>
         </div>
       </Link>
-    </>)
+    </>
+  );
 };
 
 export default SlideCard;
