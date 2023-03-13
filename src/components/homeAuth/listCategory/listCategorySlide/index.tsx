@@ -3,7 +3,7 @@ import useSWR from "swr";
 import categoriesService from "../../../../services/categoriesService";
 import SlideComponent from "@/components/common/slideComponent";
 import { Container } from "reactstrap";
-import PageSpinner from "@/components/common/spinner";
+import PageSpinner from "@/components/common/pageSpinner";
 //import SwrSpinner from "../../../common/swrSpinner";
 
 interface props {
@@ -17,8 +17,8 @@ const ListCategoriesSlide = function ({ categoryId, categoryName }: props) {
   );
 
   if (error) return error;
-  if (!data){
-    return <PageSpinner/>
+  if (!data) {
+    return <PageSpinner />;
   }
 
   return (

@@ -1,5 +1,5 @@
 import HeaderAuth from "@/components/common/headerAuth";
-import PageSpinner from "@/components/common/spinner";
+import PageSpinner from "@/components/common/pageSpinner";
 import Link from "next/link";
 import { Button, Container } from "reactstrap";
 import useSWR from "swr";
@@ -8,12 +8,11 @@ import styles from "./styles.module.scss";
 // import SwrSpinner from "../../common/swrSpinner";
 
 const FeaturedSection = function () {
-
   const { data, error } = useSWR("/featured", courseService.getFeaturedCourses);
 
   if (error) return error;
-  if (!data){
-    return <PageSpinner/>
+  if (!data) {
+    return <PageSpinner />;
   }
 
   return (
@@ -34,7 +33,7 @@ const FeaturedSection = function () {
               <Container className="pt-4">
                 <p className={styles.title}>{course.name}</p>
                 <p className={styles.description}>{course.synopsis}</p>
-                <Link href={`/courses/${course.id}`}>
+                <Link href={`/course/${course.id}`}>
                   <Button outline color="light" className={styles.button}>
                     ACESSE AGORA!
                     <img

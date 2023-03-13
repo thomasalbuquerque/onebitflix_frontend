@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import courseService, { CourseType } from "@/services/courseService";
 import { Button, Container } from "reactstrap";
-import PageSpinner from "@/components/common/spinner";
 import EpisodeCard from "@/components/episodeCard";
 import Footer from "@/components/common/footer";
+import PageSpinner from "@/components/common/pageSpinner";
 
 const CoursePage = function () {
   const [liked, setLiked] = useState(false);
@@ -138,7 +138,7 @@ const CoursePage = function () {
             </p>
           ) : (
             course?.episodes?.map((episode) => (
-              <EpisodeCard key={episode.id} episode={episode} />
+              <EpisodeCard key={episode.id} episode={episode} course={course} />
             ))
           )}
         </Container>

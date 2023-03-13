@@ -3,7 +3,7 @@ import useSWR from "swr";
 import courseService from "../../../services/courseService";
 import SlideComponent from "@/components/common/slideComponent";
 import { Container } from "reactstrap";
-import PageSpinner from "@/components/common/spinner";
+import PageSpinner from "@/components/common/pageSpinner";
 //import SwrSpinner from "../../common/swrSpinner";
 
 const FeaturedCategory = function () {
@@ -11,8 +11,8 @@ const FeaturedCategory = function () {
 
   if (error) return error;
   //if (!data) return <SwrSpinner />;
-  if (!data){
-    return <PageSpinner/>
+  if (!data) {
+    return <PageSpinner />;
   }
   return (
     <>

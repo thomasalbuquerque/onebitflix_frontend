@@ -178,6 +178,7 @@ const courseService = {
         return error.response;
       });
 
+    console.log("linha 181 de getEpisodes");
     return res;
   },
 };

@@ -1,4 +1,4 @@
-import PageSpinner from "@/components/common/spinner";
+import PageSpinner from "@/components/common/pageSpinner";
 import useSWR from "swr";
 import categoriesService, {
   CategoryType,
@@ -13,17 +13,17 @@ const ListCategories = function () {
   );
 
   if (error) return error;
-  if (!data){
-    return <PageSpinner/>
+  if (!data) {
+    return <PageSpinner />;
   }
 
   return (
     <>
       {data.data.categories?.map((category: CategoryType) => (
         <ListCategoriesSlide
-        key={category.id}
-        categoryId={category.id}
-        categoryName={category.name}
+          key={category.id}
+          categoryId={category.id}
+          categoryName={category.name}
         />
       ))}
     </>

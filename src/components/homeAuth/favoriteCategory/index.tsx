@@ -3,13 +3,13 @@ import useSWR from "swr";
 import courseService from "@/services/courseService";
 import SlideComponent from "@/components/common/slideComponent";
 import { Container } from "reactstrap";
-import PageSpinner from "@/components/common/spinner";
+import PageSpinner from "@/components/common/pageSpinner";
 
 const FavoritesCourses = function () {
   const { data, error } = useSWR("/favCourses", courseService.getFavCourses);
   if (error) return error;
-  if (!data){
-    return <PageSpinner/>
+  if (!data) {
+    return <PageSpinner />;
   }
 
   return (
