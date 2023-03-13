@@ -18,6 +18,20 @@ const CoursePage = function () {
   const router = useRouter();
   const { id } = router.query;
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("onebitflix-token")) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <PageSpinner />;
+  }
+
   useEffect(() => {
     getCourse();
   }, [id]);

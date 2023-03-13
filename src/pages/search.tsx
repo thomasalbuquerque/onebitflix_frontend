@@ -7,6 +7,7 @@ import courseService, { CourseType } from "@/services/courseService";
 import SearchCard from "@/components/searchCard";
 import { Container } from "reactstrap";
 import Footer from "@/components/common/footer";
+import PageSpinner from "@/components/common/pageSpinner";
 
 const Search = function () {
   const router = useRouter();
@@ -14,6 +15,20 @@ const Search = function () {
 
   const [searchResult, setSearchResult] = useState<CourseType[]>([]);
   const [searchRender, setSearchRender] = useState(true);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("onebitflix-token")) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <PageSpinner />;
+  }
 
   const searchCourses = async function () {
     const res = await courseService.getSearch(searchName);
@@ -42,16 +57,16 @@ const Search = function () {
           <HeaderAuth />
         </div>
         <div className={styles.searchResult}>
-        {searchRender ? (
+          {searchRender ? (
             <Container className="d-flex flex-wrap justify-content-center gap-5 py-4">
               {searchResult?.map((course) => (
                 <SearchCard key={course.id} course={course} />
               ))}
             </Container>
-        ) : (
-          <p className={styles.noSearchText}>Nenhum resultado encontrado!</p>
+          ) : (
+            <p className={styles.noSearchText}>Nenhum resultado encontrado!</p>
           )}
-          </div>
+        </div>
         <div className={styles.header}>
           <Footer />
         </div>
