@@ -1,13 +1,13 @@
-import styles from "../../styles/coursePage.module.scss";
-import Head from "next/head";
-import HeaderAuth from "@/components/common/headerAuth";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import courseService, { CourseType } from "@/services/courseService";
-import { Button, Container } from "reactstrap";
-import EpisodeCard from "@/components/episodeCard";
-import Footer from "@/components/common/footer";
-import PageSpinner from "@/components/common/pageSpinner";
+import styles from '../../styles/coursePage.module.scss';
+import Head from 'next/head';
+import HeaderAuth from '@/components/common/headerAuth';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import courseService, { CourseType } from '@/services/courseService';
+import { Button, Container } from 'reactstrap';
+import EpisodeCard from '@/components/episodeCard';
+import Footer from '@/components/common/footer';
+import PageSpinner from '@/components/common/pageSpinner';
 
 const CoursePage = function () {
   const [liked, setLiked] = useState(false);
@@ -20,24 +20,8 @@ const CoursePage = function () {
 
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!sessionStorage.getItem("onebitflix-token")) {
-      router.push("/login");
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading) {
-    return <PageSpinner />;
-  }
-
-  useEffect(() => {
-    getCourse();
-  }, [id]);
-
   const getCourse = async function () {
-    if (typeof id !== "string") return;
+    if (typeof id !== 'string') return;
 
     const res = await courseService.getEpisodes(id);
 
@@ -48,8 +32,24 @@ const CoursePage = function () {
     }
   };
 
+  useEffect(() => {
+    getCourse();
+  }, [id]);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('onebitflix-token')) {
+      router.push('/login');
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <PageSpinner />;
+  }
+
   const handleLikeCourse = async () => {
-    if (typeof id !== "string") return;
+    if (typeof id !== 'string') return;
 
     if (liked === true) {
       await courseService.removeLike(id);
@@ -61,7 +61,7 @@ const CoursePage = function () {
   };
 
   const handleFavCourse = async () => {
-    if (typeof id !== "string") return;
+    if (typeof id !== 'string') return;
 
     if (favorited === true) {
       await courseService.removeFav(id);
@@ -72,7 +72,7 @@ const CoursePage = function () {
     }
   };
 
-  if (typeof course === "undefined") return PageSpinner;
+  if (typeof course === 'undefined') return PageSpinner;
 
   return (
     <>
@@ -84,9 +84,9 @@ const CoursePage = function () {
         <div
           style={{
             backgroundImage: `linear-gradient(to bottom, #6666661a, #151515), url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            minHeight: "450px",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '450px',
           }}
         >
           <HeaderAuth />

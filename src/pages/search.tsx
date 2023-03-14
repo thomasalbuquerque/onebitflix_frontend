@@ -1,13 +1,13 @@
-import styles from "../styles/search.module.scss";
-import Head from "next/head";
-import HeaderAuth from "@/components/common/headerAuth";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import courseService, { CourseType } from "@/services/courseService";
-import SearchCard from "@/components/searchCard";
-import { Container } from "reactstrap";
-import Footer from "@/components/common/footer";
-import PageSpinner from "@/components/common/pageSpinner";
+import styles from '../styles/search.module.scss';
+import Head from 'next/head';
+import HeaderAuth from '@/components/common/headerAuth';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import courseService, { CourseType } from '@/services/courseService';
+import SearchCard from '@/components/searchCard';
+import { Container } from 'reactstrap';
+import Footer from '@/components/common/footer';
+import PageSpinner from '@/components/common/pageSpinner';
 
 const Search = function () {
   const router = useRouter();
@@ -18,20 +18,11 @@ const Search = function () {
 
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!sessionStorage.getItem("onebitflix-token")) {
-      router.push("/login");
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading) {
-    return <PageSpinner />;
-  }
-
   const searchCourses = async function () {
     const res = await courseService.getSearch(searchName);
+
+    console.log('console.log(res) search.tsx');
+    console.log(res);
     console.log(res.data.rows);
     setSearchResult(res.data.rows);
 
@@ -45,6 +36,17 @@ const Search = function () {
   useEffect(() => {
     searchCourses();
   }, [searchName]);
+  useEffect(() => {
+    if (!sessionStorage.getItem('onebitflix-token')) {
+      router.push('/login');
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <PageSpinner />;
+  }
 
   return (
     <>

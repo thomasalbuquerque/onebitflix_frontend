@@ -1,19 +1,19 @@
-import styles from "../../../styles/episodePlayer.module.scss";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import HeaderGeneric from "@/components/common/headerGeneric";
-import courseService, { CourseType } from "@/services/courseService";
-import { useEffect, useRef, useState } from "react";
-import PageSpinner from "../../../components/common/pageSpinner/index";
-import { Button, Container } from "reactstrap";
-import ReactPlayer from "react-player";
-import watchEpisodeService from "@/services/episodesService";
+import styles from '../../../styles/episodePlayer.module.scss';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import HeaderGeneric from '@/components/common/headerGeneric';
+import courseService, { CourseType } from '@/services/courseService';
+import { useEffect, useRef, useState } from 'react';
+import PageSpinner from '../../../components/common/pageSpinner/index';
+import { Button, Container } from 'reactstrap';
+import ReactPlayer from 'react-player';
+import watchEpisodeService from '@/services/episodesService';
 
 const EpisodePlayer = function () {
   const router = useRouter();
-  const episodeOrder = parseFloat(router.query.id?.toString() || "");
-  const episodeId = parseFloat(router.query.episodeid?.toString() || "");
-  const courseId = router.query.courseid?.toString() || "";
+  const episodeOrder = parseFloat(router.query.id?.toString() || '');
+  const episodeId = parseFloat(router.query.episodeid?.toString() || '');
+  const courseId = router.query.courseid?.toString() || '';
 
   const [getEpisodeTime, setGetEpisodeTime] = useState(0);
   const [episodeTime, setEpisodeTime] = useState(0);
@@ -25,9 +25,41 @@ const EpisodePlayer = function () {
 
   const [loading, setLoading] = useState(true);
 
+  const getCourse = async function () {
+    if (typeof courseId !== 'string') {
+      console.log('linha 18 de episodeplayer');
+      return;
+    }
+
+    const res = await courseService.getEpisodes(courseId);
+    console.log(res);
+    if (res.status === 200) {
+      setCourse(res.data);
+    }
+  };
+
   useEffect(() => {
-    if (!sessionStorage.getItem("onebitflix-token")) {
-      router.push("/login");
+    getCourse();
+  }, [courseId]);
+  const handleSetEpisodeTime = async () => {
+    await watchEpisodeService.setWatchTime({
+      episodeId: episodeId,
+      seconds: Math.round(episodeTime),
+    });
+  };
+
+  const handleGetEpisodeTime = async () => {
+    const res = await watchEpisodeService.getWatchTime(episodeId);
+    if (res.data !== null) {
+      setGetEpisodeTime(res.data.seconds);
+    }
+  };
+  useEffect(() => {
+    handleGetEpisodeTime();
+  }, [router]);
+  useEffect(() => {
+    if (!sessionStorage.getItem('onebitflix-token')) {
+      router.push('/login');
     } else {
       setLoading(false);
     }
@@ -36,9 +68,6 @@ const EpisodePlayer = function () {
   if (loading) {
     return <PageSpinner />;
   }
-  useEffect(() => {
-    getCourse();
-  }, [courseId]);
 
   const handlePlayerTime = () => {
     playerRef.current?.seekTo(getEpisodeTime);
@@ -50,37 +79,6 @@ const EpisodePlayer = function () {
       handleSetEpisodeTime();
     }, 1000 * 3);
   }
-
-  const handleGetEpisodeTime = async () => {
-    const res = await watchEpisodeService.getWatchTime(episodeId);
-    if (res.data !== null) {
-      setGetEpisodeTime(res.data.seconds);
-    }
-  };
-
-  const handleSetEpisodeTime = async () => {
-    await watchEpisodeService.setWatchTime({
-      episodeId: episodeId,
-      seconds: Math.round(episodeTime),
-    });
-  };
-
-  useEffect(() => {
-    handleGetEpisodeTime();
-  }, [router]);
-
-  const getCourse = async function () {
-    if (typeof courseId !== "string") {
-      console.log("linha 18 de episodeplayer");
-      return;
-    }
-
-    const res = await courseService.getEpisodes(courseId);
-    console.log(res);
-    if (res.status === 200) {
-      setCourse(res.data);
-    }
-  };
 
   if (course?.episodes == undefined) return <PageSpinner />;
 
@@ -121,14 +119,14 @@ const EpisodePlayer = function () {
           <p className={styles.episodeTitle}>
             {course.episodes[episodeOrder].name}
           </p>
-          {typeof window == "undefined" ? null : (
+          {typeof window == 'undefined' ? null : (
             <ReactPlayer
               className={styles.player}
               url={`${
                 process.env.NEXT_PUBLIC_BASEURL
               }/episodes/stream?videoUrl=${
                 course.episodes[episodeOrder].videoUrl
-              }&token=${sessionStorage.getItem("onebitflix-token")}`}
+              }&token=${sessionStorage.getItem('onebitflix-token')}`}
               controls
               ref={playerRef}
               onStart={handlePlayerTime}

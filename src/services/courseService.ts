@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import api from "./api";
 
 export type EpisodeType = {
@@ -18,7 +19,7 @@ export type CourseType = {
 
 const courseService = {
   getNewestCourses: async () => {
-    const res = await api.get("/courses/newest").catch((error) => {
+    const res: AxiosResponse = await api.get("/courses/newest").catch((error) => {
       console.log(error.response.data.message);
 
       return error.response;
@@ -31,7 +32,7 @@ const courseService = {
   getFeaturedCourses: async () => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .get("/courses/featured", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -50,7 +51,7 @@ const courseService = {
   addToFav: async (courseId: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .post(
         "/favorites",
         { courseId },
@@ -72,7 +73,7 @@ const courseService = {
   removeFav: async (courseId: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .delete(`/favorites/${courseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -90,7 +91,7 @@ const courseService = {
   getFavCourses: async () => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .get("/favorites", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -108,7 +109,7 @@ const courseService = {
   addLike: async (courseId: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .post(
         "likes",
         { courseId },
@@ -130,7 +131,7 @@ const courseService = {
   removeLike: async (courseId: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .delete(`/likes/${courseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -148,7 +149,7 @@ const courseService = {
   getSearch: async (name: string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .get(`/courses/search?name=${name}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -166,7 +167,7 @@ const courseService = {
   getEpisodes: async (id: number | string) => {
     const token = sessionStorage.getItem("onebitflix-token");
 
-    const res = await api
+    const res: AxiosResponse = await api
       .get(`/courses/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
