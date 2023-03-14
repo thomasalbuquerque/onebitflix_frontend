@@ -1,21 +1,21 @@
-import styles from "../styles/registerLogin.module.scss";
-import Head from "next/head";
-import HeaderGeneric from "@/components/common/headerGeneric";
-import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
-import Footer from "@/components/common/footer";
-import { FormEvent, useEffect, useState } from "react";
-import authService from "@/services/authService";
-import { useRouter } from "next/router";
-import ToastComponent from "@/components/common/toast";
+import styles from '../styles/registerLogin.module.scss';
+import Head from 'next/head';
+import HeaderGeneric from '@/components/common/headerGeneric';
+import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import Footer from '@/components/common/footer';
+import { FormEvent, useEffect, useState } from 'react';
+import authService from '@/services/authService';
+import { useRouter } from 'next/router';
+import ToastComponent from '@/components/common/toast';
 
 const Register = function () {
   const router = useRouter();
   const [toastIsOpen, setToastIsOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    if (sessionStorage.getItem("onebitflix-token")) {
-      router.push("/home");
+    if (sessionStorage.getItem('onebitflix-token')) {
+      router.push('/home');
     }
   }, []);
 
@@ -23,17 +23,23 @@ const Register = function () {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const firstName = formData.get("firstName")!.toString();
-    const lastName = formData.get("lastName")!.toString();
-    const phone = formData.get("phone")!.toString();
-    const birth = formData.get("birth")!.toString();
-    const email = formData.get("email")!.toString();
-    const password = formData.get("password")!.toString();
-    const confirmPassword = formData.get("confirmPassword")!.toString();
+    const firstName = formData.get('firstName')!.toString();
+    const lastName = formData.get('lastName')!.toString();
+    const phone = formData.get('phone')!.toString();
+    const birth0 = formData.get('birth')!.toString();
+    const birth1 = new Date(
+      Number(birth0.slice(6, 10)),
+      Number(birth0.slice(3, 5)) - 1, //monthIndex
+      Number(birth0.slice(0, 2))
+    );
+    const birth = birth1.toString();
+    const email = formData.get('email')!.toString();
+    const password = formData.get('password')!.toString();
+    const confirmPassword = formData.get('confirmPassword')!.toString();
     const params = { firstName, lastName, phone, birth, email, password };
 
     if (password != confirmPassword) {
-      setToastMessage("Senha e confirmação diferentes.");
+      setToastMessage('Senha e confirmação diferentes.');
       setToastIsOpen(true);
       setTimeout(() => {
         setToastIsOpen(false);
@@ -44,13 +50,13 @@ const Register = function () {
     const { data, status } = await authService.register(params);
 
     if (status === 201) {
-      router.push("/login?success=true");
+      router.push('/login?success=true');
     } else {
       setToastMessage(data.message);
       setToastIsOpen(true);
       setTimeout(() => {
-      setToastIsOpen(false);
-    }, 1000 * 3);
+        setToastIsOpen(false);
+      }, 1000 * 3);
     }
   };
 
@@ -180,7 +186,11 @@ const Register = function () {
             </Button>
           </Form>
         </Container>
-        <ToastComponent color="bg-danger" isOpen={toastIsOpen} message={toastMessage}/>
+        <ToastComponent
+          color="bg-danger"
+          isOpen={toastIsOpen}
+          message={toastMessage}
+        />
         <Footer />
       </main>
     </>
